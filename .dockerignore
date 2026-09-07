@@ -1,0 +1,8 @@
+.git
+.env
+*.log
+uploads/admins/*
+uploads/advisors/*
+uploads/authors/*
+storage/temp/*
+rmutimt_gallery.sql

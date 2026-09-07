@@ -1,0 +1,22 @@
+# ความลับ – ห้าม commit
+.env
+.env.*
+!.env.example
+
+# ฐานข้อมูล dump (มี bcrypt hash + อีเมลผู้ใช้จริง) – import เข้า Supabase จากเครื่อง local เท่านั้น
+database_supabase.sql
+rmutimt_gallery.sql
+database.sql
+
+# ไฟล์ที่ผู้ใช้อัปโหลด (เก็บเฉพาะโครงโฟลเดอร์)
+uploads/**
+!uploads/
+!uploads/*/
+!uploads/**/.gitkeep
+
+# แคช/ชั่วคราว
+storage/temp/*
+!storage/temp/.gitkeep
+
+.DS_Store
+*.log
