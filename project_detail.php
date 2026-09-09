@@ -321,7 +321,7 @@ try {
          ORDER BY 
             (CASE WHEN p.category_id = :cat_id1 AND :cat_id2 > 0 THEN 2 ELSE 0 END +
              CASE WHEN p.advisor_id = :adv_id1 AND :adv_id2 > 0 THEN 1 ELSE 0 END) DESC,
-            random()
+            RAND()
          LIMIT 4'
     );
     $relatedStmt->execute([

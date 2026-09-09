@@ -249,7 +249,7 @@ try {
     }
     $advisors = $pdo->query('SELECT id, prefix, full_name, is_active FROM advisors ORDER BY full_name ASC')->fetchAll(PDO::FETCH_ASSOC);
 
-    $heroGalleryStmt = $pdo->prepare('SELECT file_urls FROM projects WHERE status = :status ORDER BY random() LIMIT 12');
+    $heroGalleryStmt = $pdo->prepare('SELECT file_urls FROM projects WHERE status = :status ORDER BY RAND() LIMIT 12');
     $heroGalleryStmt->execute([':status' => $approvedStatus]);
     $heroGalleryProjects = $heroGalleryStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -257,7 +257,7 @@ try {
     $statsCategoryCount = (int) $pdo->query('SELECT COUNT(*) FROM categories')->fetchColumn();
     $statsAdvisorCount = (int) $pdo->query('SELECT COUNT(*) FROM advisors WHERE is_active = 1')->fetchColumn();
 
-    $randomProjectStmt = $pdo->query("SELECT id FROM projects WHERE status = 'approved' ORDER BY random() LIMIT 1");
+    $randomProjectStmt = $pdo->query("SELECT id FROM projects WHERE status = 'approved' ORDER BY RAND() LIMIT 1");
     $randomProjectId = $randomProjectStmt->fetchColumn();
     $randomProjectLink = $randomProjectId ? "./project_detail.php?id=" . (int)$randomProjectId : "#";
 
@@ -281,7 +281,7 @@ try {
          FROM projects p
          LEFT JOIN categories c ON c.id = p.category_id
          WHERE p.status = :status
-         ORDER BY random()
+         ORDER BY RAND()
          LIMIT 4'
     );
     $featuredStmt->execute([':status' => $approvedStatus]);

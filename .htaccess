@@ -1,0 +1,21 @@
+# ---- ความปลอดภัยพื้นฐาน ----
+# ห้ามเข้าถึงไฟล์ .env / .git / ไฟล์ตั้งค่า จากเบราว์เซอร์
+<FilesMatch "(^\.env|^\.htaccess$|\.sql$|\.md$|composer\.(json|lock))">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # กันเข้าถึงโฟลเดอร์ .git
+    RewriteRule ^\.git - [F,L]
+</IfModule>
+
+# ---- ค่าอัปโหลดไฟล์ (บางโฮสฟรีจะ override ค่านี้เอง) ----
+<IfModule mod_php.c>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 64M
+    php_value max_execution_time 300
+    php_value memory_limit 256M
+</IfModule>
+
+DirectoryIndex index.php

@@ -14,7 +14,7 @@ require_once __DIR__ . '/../config/csrf.php';
 require_once __DIR__ . '/image_compress.php';
 
 try {
-    $pdo->exec("ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_filename VARCHAR(255)");
+    $pdo->exec("ALTER TABLE users ADD COLUMN avatar_filename VARCHAR(255) NULL DEFAULT NULL AFTER email");
 } catch (Throwable $e) { /* Ignore if exists */ }
 
 $flashError = '';

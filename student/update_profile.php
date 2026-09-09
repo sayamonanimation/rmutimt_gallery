@@ -47,7 +47,7 @@ if ($newFilename === null) {
 $destPath = $uploadDir . $newFilename;
 
 try {
-    $pdo->exec("ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_filename VARCHAR(255)");
+    $pdo->exec("ALTER TABLE users ADD COLUMN avatar_filename VARCHAR(255) NULL DEFAULT NULL AFTER email");
 } catch (Throwable $e) {
     // column may already exist
 }

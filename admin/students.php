@@ -17,7 +17,7 @@ $flashSuccess = '';
 $hasStudentIdColumn = true;
 
 try {
-    $columnCheckStmt = $pdo->query("SELECT 1 FROM information_schema.columns WHERE table_schema = current_schema() AND table_name = 'users' AND column_name = 'student_id' LIMIT 1");
+    $columnCheckStmt = $pdo->query("SHOW COLUMNS FROM users LIKE 'student_id'");
     $hasStudentIdColumn = (bool) ($columnCheckStmt && $columnCheckStmt->fetch());
 } catch (Throwable $e) {
     error_log('[ADMIN_STUDENTS] check student_id column failed: ' . $e->getMessage());

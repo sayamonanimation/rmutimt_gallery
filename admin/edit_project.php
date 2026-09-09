@@ -17,7 +17,7 @@ require_once __DIR__ . '/../config/manage_list_state.php';
 function tableExists(PDO $pdo, string $tableName): bool
 {
     try {
-        $stmt = $pdo->prepare("SELECT 1 FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = :table_name LIMIT 1");
+        $stmt = $pdo->prepare('SHOW TABLES LIKE :table_name');
         $stmt->execute([':table_name' => $tableName]);
         return $stmt->fetch() !== false;
     } catch (Throwable) {
@@ -28,8 +28,8 @@ function tableExists(PDO $pdo, string $tableName): bool
 function tableHasColumn(PDO $pdo, string $tableName, string $columnName): bool
 {
     try {
-        $stmt = $pdo->prepare("SELECT 1 FROM information_schema.columns WHERE table_schema = current_schema() AND table_name = :table_name AND column_name = :column_name LIMIT 1");
-        $stmt->execute([':table_name' => $tableName, ':column_name' => $columnName]);
+        $stmt = $pdo->prepare("SHOW COLUMNS FROM `$tableName` LIKE :column_name");
+        $stmt->execute([':column_name' => $columnName]);
         return $stmt->fetch() !== false;
     } catch (Throwable) {
         return false;

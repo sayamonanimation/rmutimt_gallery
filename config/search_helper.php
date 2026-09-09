@@ -76,7 +76,7 @@ function build_smart_search_query(string $searchQuery, array &$params): string
             $params[$p4] = $val;
             $params[$p5] = $val;
 
-            $variantSqlParts[] = "(REPLACE(p.title_th, '  ', ' ') ILIKE {$p1} OR REPLACE(p.title_en, '  ', ' ') ILIKE {$p2} OR REPLACE(p.creators, '  ', ' ') ILIKE {$p3} OR REPLACE(c.name, '  ', ' ') ILIKE {$p4} OR REPLACE(adv.full_name, '  ', ' ') ILIKE {$p5})";
+            $variantSqlParts[] = "(REPLACE(p.title_th, '  ', ' ') LIKE {$p1} OR REPLACE(p.title_en, '  ', ' ') LIKE {$p2} OR REPLACE(p.creators, '  ', ' ') LIKE {$p3} OR REPLACE(c.name, '  ', ' ') LIKE {$p4} OR REPLACE(adv.full_name, '  ', ' ') LIKE {$p5})";
         }
 
         $tokenSqlParts[] = '(' . implode(' OR ', $variantSqlParts) . ')';
