@@ -23,14 +23,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/env.php';
 
-$dbHost = getenv('DB_HOST') ?: '127.0.0.1';
-$dbPort = getenv('DB_PORT') ?: '3306';
-$dbName = getenv('DB_NAME') ?: 'rmutimt_gallery';
-$dbUser = getenv('DB_USER') ?: 'root';
-$dbPass = getenv('DB_PASS');
-if ($dbPass === false) {
-    $dbPass = '';
-}
+$dbHost = rmutimt_env('DB_HOST', '127.0.0.1');
+$dbPort = rmutimt_env('DB_PORT', '3306');
+$dbName = rmutimt_env('DB_NAME', 'rmutimt_gallery');
+$dbUser = rmutimt_env('DB_USER', 'root');
+$dbPass = rmutimt_env('DB_PASS', '');
 
 $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $dbHost, $dbPort, $dbName);
 

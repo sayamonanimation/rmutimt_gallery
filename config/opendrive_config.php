@@ -9,8 +9,8 @@
  */
 require_once __DIR__ . '/env.php';
 
-$od_username  = getenv('OD_USERNAME') ?: '';
-$od_password  = getenv('OD_PASSWORD') ?: '';
-$od_folder_id = getenv('OD_FOLDER_ID') ?: '';
+$od_username  = rmutimt_env('OD_USERNAME', '');
+$od_password  = rmutimt_env('OD_PASSWORD', '');
+$od_folder_id = rmutimt_env('OD_FOLDER_ID', '');
 /** API root including version (use dev host for Cloudflare / API parity). */
-$od_api_base  = getenv('OD_API_BASE') ?: 'https://dev.opendrive.com/api/v1';
+$od_api_base  = rmutimt_env('OD_API_BASE', 'https://dev.opendrive.com/api/v1');

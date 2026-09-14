@@ -11,6 +11,30 @@ declare(strict_types=1);
  * บนโฮสที่ตั้ง env ได้ (Render / Railway) ไม่ต้องมีไฟล์ .env ก็ทำงานได้ปกติ
  */
 
+if (!function_exists('rmutimt_env')) {
+    /**
+     * อ่านค่า environment variable แบบ fallback หลายทาง
+     *
+     * บางโฮส (เช่น InfinityFree) ปิดผลของ putenv() ไว้ (เพื่อความปลอดภัยของ shared hosting)
+     * ทำให้ getenv() คืนค่า false แม้จะเรียก putenv() ไปแล้วในโค้ดเดียวกัน
+     * ฟังก์ชันนี้จึงเช็ค $_ENV / $_SERVER เป็นสำรองด้วย
+     */
+    function rmutimt_env(string $key, ?string $default = null): ?string
+    {
+        $value = getenv($key);
+        if ($value !== false && $value !== '') {
+            return $value;
+        }
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
+            return (string) $_ENV[$key];
+        }
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') {
+            return (string) $_SERVER[$key];
+        }
+        return $default;
+    }
+}
+
 if (!function_exists('rmutimt_load_env')) {
     function rmutimt_load_env(string $path): void
     {
