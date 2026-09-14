@@ -38,8 +38,26 @@ final class OpenDriveHelper
         $this->password = isset($od_password) ? (string) $od_password : '';
         $base = isset($od_api_base) ? trim((string) $od_api_base) : 'https://dev.opendrive.com/api/v1';
         $this->apiBase = rtrim($this->normalizeApiHostToDev($base), '/');
-        $this->cookieFile = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'od_cookie.txt';
+        $this->cookieFile = self::resolveWritableTempDir() . DIRECTORY_SEPARATOR . 'od_cookie.txt';
         $this->ensureCookieFile();
+    }
+
+    /**
+     * โฟลเดอร์ชั่วคราวที่ใช้ได้จริง — บาง shared hosting (เช่น InfinityFree) ปิดสิทธิ์เขียน
+     * ที่ sys_get_temp_dir() ของระบบ (jailed /tmp) จึงต้องลองใช้ storage/temp/ ของโปรเจกต์ก่อน
+     * แล้วค่อย fallback ไปที่ system temp dir เป็นทางเลือกสุดท้าย
+     */
+    public static function resolveWritableTempDir(): string
+    {
+        $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'temp';
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        if (is_dir($dir) && is_writable($dir)) {
+            return $dir;
+        }
+
+        return sys_get_temp_dir();
     }
 
     /**
@@ -298,7 +316,7 @@ final class OpenDriveHelper
                 if ($len === 0) {
                     break;
                 }
-                $chunkPath = sys_get_temp_dir() . '/od_chunk_' . bin2hex(random_bytes(8)) . '.bin';
+                $chunkPath = self::resolveWritableTempDir() . '/od_chunk_' . bin2hex(random_bytes(8)) . '.bin';
                 if (file_put_contents($chunkPath, $piece) === false) {
                     throw new RuntimeException('OpenDrive: เขียน chunk ชั่วคราวไม่สำเร็จ');
                 }

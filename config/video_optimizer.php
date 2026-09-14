@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/opendrive_helper.php';
+
 /**
  * Optimize uploaded MP4 video files for fast web streaming (faststart / moov atom at start).
  * Uses ffmpeg if available; falls back gracefully to the original file if ffmpeg is missing.
@@ -27,7 +29,7 @@ function prepareVideoUploadForOpenDrive(array $file): array
         return ['path' => $tmpPath, 'name' => $originalName, 'is_temp' => false];
     }
 
-    $destDir = sys_get_temp_dir();
+    $destDir = OpenDriveHelper::resolveWritableTempDir();
     $outPath = $destDir . DIRECTORY_SEPARATOR . 'faststart_' . uniqid('', true) . '.' . $ext;
 
     $cmd = sprintf(
