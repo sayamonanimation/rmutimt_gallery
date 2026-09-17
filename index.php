@@ -438,7 +438,7 @@ $archiveStatCards = [
         'value' => $formatStatPlus($statsAdvisorCount),
         'subtitle_th' => 'อาจารย์ที่ปรึกษา',
         'subtitle_en' => 'Faculty advisors',
-        'image' => './assets/images/5.png',
+        'image' => './assets/images/5.png?v=2',
         'gradient' => 'from-[#FDE68A] via-[#FBCFE8] to-[#F3F4F6]',
         'icon' => 'advisors',
     ],
